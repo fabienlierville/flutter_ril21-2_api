@@ -10,6 +10,8 @@ class PageHome extends StatefulWidget {
 }
 
 class _PageHomeState extends State<PageHome> {
+  List<Movie> movies = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,10 +40,14 @@ class _PageHomeState extends State<PageHome> {
       //Faire un setState qui demande l'affichage d'un Widget "Patientez ..."
       Map<String,dynamic> json = await api.getPopular();
       if(json["code"] == 200){
-        List<Movie> movies = Movie.moviesFromApi(json);
+        List<Movie> moviesApi = Movie.moviesFromApi(json);
         movies.forEach((Movie movie) {
           print(movie.title);
         });
+        setState(() {
+          movies = moviesApi;
+        });
+        // Todo afficher le ListView
       }else{
         //Todo écran d'erreur
         //Faire un setState qui demande l'affichage d'un Widget "Error"

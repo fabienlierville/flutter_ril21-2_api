@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiMovie{
-  final String Url = "https://developers.themoviedb.org/3/movies";
+  final String Url = "https://api.themoviedb.org/3/movie";
   final String Key = "f5a8a486fb069fcb10396a7a3e49ceb4";
   final String Lang = "fr-FR";
 
