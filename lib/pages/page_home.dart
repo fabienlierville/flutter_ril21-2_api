@@ -11,6 +11,13 @@ class PageHome extends StatefulWidget {
 
 class _PageHomeState extends State<PageHome> {
   List<Movie> movies = [];
+  StatusApi statusApi = StatusApi.chargement;
+
+  @override
+  void initState() {
+    getPupularsMovies();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,35 +31,57 @@ class _PageHomeState extends State<PageHome> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          children: [
-
-          ],
-        ),
-      ),
+      body: bodyNamic(),
     );
+  }
+
+  Widget bodyNamic(){
+    if(statusApi==StatusApi.chargement){
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    if(statusApi==StatusApi.ok){
+      //Todo : Liste des filmes (Listview.Builder ...)
+      return Center();
+    }
+
+    return Center(
+      child: Text("Error"),
+    );
+
   }
 
   Future<void> getPupularsMovies() async{
       ApiMovie api = ApiMovie();
-      //Todo écran d'attente
+      setState(() {
+        statusApi = StatusApi.chargement;
+      });
+      await Future.delayed(Duration(seconds: 3));
       //Faire un setState qui demande l'affichage d'un Widget "Patientez ..."
       Map<String,dynamic> json = await api.getPopular();
       if(json["code"] == 200){
         List<Movie> moviesApi = Movie.moviesFromApi(json["body"]);
+        setState(() {
+          movies = moviesApi;
+          statusApi = StatusApi.ok;
+        });
         movies.forEach((Movie movie) {
           print(movie.title);
         });
-        setState(() {
-          movies = moviesApi;
-        });
-        // Todo afficher le ListView
       }else{
-        //Todo écran d'erreur
-        //Faire un setState qui demande l'affichage d'un Widget "Error"
+        setState(() {
+          statusApi = StatusApi.error;
+        });
       }
   }
 
 
+}
+
+enum StatusApi {
+  chargement,
+  error,
+  ok
 }
