@@ -16,7 +16,7 @@ class Movie{
   static List<Movie> moviesFromApi(Map<String,dynamic> json){
     List<Movie> l = [];
 
-    List<dynamic> results = json["results"];
+    List<Map<String,dynamic>> results = json["results"];
 
     results.forEach((element) {
       Movie movie = Movie(
