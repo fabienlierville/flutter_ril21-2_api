@@ -15,7 +15,7 @@ class Movie{
 
   static List<Movie> moviesFromApi(Map<String,dynamic> json){
     List<Movie> l = [];
-    print(json);
+
     List<dynamic> results = json["results"];
 
     results.forEach((element) {
@@ -23,8 +23,8 @@ class Movie{
         id: element["id"],
         title: element["title"],
         overview: element["overview"],
-        imageUrl: element["imageUrl"],
-        releaseDate: DateTime.parse(element["releaseDate"]),
+        imageUrl: element["poster_path"],
+        releaseDate: DateTime.parse(element["release_date"]),
         vote: double.tryParse(element["vote_average"].toString())!
       );
 

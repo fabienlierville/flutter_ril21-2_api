@@ -40,7 +40,7 @@ class _PageHomeState extends State<PageHome> {
       //Faire un setState qui demande l'affichage d'un Widget "Patientez ..."
       Map<String,dynamic> json = await api.getPopular();
       if(json["code"] == 200){
-        List<Movie> moviesApi = Movie.moviesFromApi(json);
+        List<Movie> moviesApi = Movie.moviesFromApi(json["body"]);
         movies.forEach((Movie movie) {
           print(movie.title);
         });
