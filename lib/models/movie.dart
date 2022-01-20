@@ -9,6 +9,10 @@ class Movie{
 
   Movie({required this.id,required this.title,required this.overview,required this.releaseDate,required this.imageUrl,required this.vote});
 
+  String getFullImageUrl(){
+    return "http://xxxxx/${imageUrl}";
+  }
+
   static List<Movie> moviesFromApi(Map<String,dynamic> json){
     List<Movie> l = [];
 
@@ -26,8 +30,6 @@ class Movie{
 
       l.add(movie);
     });
-
-
 
     return l;
   }
